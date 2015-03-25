@@ -34,10 +34,9 @@ if ! docker ps -a | grep mailinabox-userdata > /dev/null; then
 	echo "Creating a new container for your data (mailinabox-userdata)..."
 	tput setaf 7
 
-	docker run -d \
+	docker create -v /home/user-data \
 		--name mailinabox-userdata \
-		-v /home/user-data \
-		scratch /bin/does-not-exist-but-thats-ok
+		busybox:latest
 else
 	tput setaf 2
 	echo
