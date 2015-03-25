@@ -1,0 +1,89 @@
+<style>
+#backup-status th { text-align: center; }
+#backup-status tr.full-backup td { font-weight: bold; }
+</style>
+
+<h2>Backup Status</h2>
+
+<h3>Copying Backup Files</h3>
+
+<p>The box makes an incremental backup each night. The backup is stored on the machine itself. You are responsible for copying the backup files off of the machine.</p>
+
+<p>Many cloud providers make this easy by allowing you to take snapshots of the machine's disk.</p>
+
+<p>You can also use SFTP (FTP over SSH) to copy files from <tt id="backup-location"></tt>. These files are encrpyted, so they are safe to store anywhere. Copy the encryption password from <tt id="backup-encpassword-file"></tt> also but keep it in a safe location.</p>
+
+<h3>Current Backups</h3>
+
+<p>The backup directory currently contains the backups listed below. The total size on disk of the backups is <span id="backup-total-size"></span>.</p>
+
+<table id="backup-status" class="table" style="width: auto">
+  <thead>
+    <th colspan="2">When</th>
+    <th>Type</th>
+    <th>Size</th>
+    <th>Deleted in...</th>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<p style="margin-top: 2em"><small>The size column in the table indicates the size of the encrypted backup, but the total size on disk shown above includes storage for unencrypted intermediate files.</small></p>
+
+<script>
+function nice_size(bytes) {
+  var powers = ['bytes', 'KB', 'MB', 'GB', 'TB'];
+  while (true) {
+    if (powers.length == 1) break;
+    if (bytes < 1000) break;
+    bytes /= 1024;
+    powers.shift();
+  }
+  // round to have three significant figures but at most one decimal place
+  if (bytes >= 100)
+    bytes = Math.round(bytes)
+  else
+    bytes = Math.round(bytes*10)/10;
+  return bytes + " " + powers[0];
+}
+
+function show_system_backup() {
+  $('#backup-status tbody').html("<tr><td colspan='2' class='text-muted'>Loading...</td></tr>")
+  api(
+    "/system/backup/status",
+    "GET",
+    { },
+    function(r) {
+      $('#backup-location').text(r.encdirectory);
+      $('#backup-encpassword-file').text(r.encpwfile);
+
+      $('#backup-status tbody').html("");
+      var total_disk_size = 0;
+
+      if (r.backups.length == 0) {
+        var tr = $('<tr><td colspan="3">No backups have been made yet.</td></tr>');
+        $('#backup-status tbody').append(tr);
+      }
+
+      for (var i = 0; i < r.backups.length; i++) {
+        var b = r.backups[i];
+        var tr = $('<tr/>');
+        if (b.full) tr.addClass("full-backup");
+        tr.append( $('<td/>').text(b.date_str + " " + r.tz) );
+        tr.append( $('<td/>').text(b.date_delta + " ago") );
+        tr.append( $('<td/>').text(b.full ? "full" : "increment") );
+        tr.append( $('<td style="text-align: right"/>').text( nice_size(b.encsize)) );
+        if (b.deleted_in)
+          tr.append( $('<td/>').text(b.deleted_in) );
+        else
+          tr.append( $('<td class="text-muted">n/a</td>') );
+        $('#backup-status tbody').append(tr);
+
+        total_disk_size += b.size;
+        total_disk_size += b.encsize;
+      }
+
+      $('#backup-total-size').text(nice_size(total_disk_size));
+    })
+}
+</script>
