@@ -142,6 +142,7 @@ source setup/spamassassin.sh
 source setup/web.sh
 source setup/webmail.sh
 source setup/zpush.sh
+source setup/ssh.sh
 source setup/management.sh
 
 # In Docker, sysvinit services are started automatically. Runit services

@@ -69,7 +69,7 @@ tput setaf 7
 docker run \
 	--privileged \
 	-v /dev/urandom:/dev/random \
-	-p 25 -p 53/udp -p 53/tcp -p 80 -p 443 -p 587 -p 993 \
+	-p 25 -p 53/udp -p 53/tcp -p 80 -p 443 -p 587 -p 993 -p 22\
 	--name mailinabox-services \
 	--volumes-from mailinabox-userdata \
 	-e "SKIP_NETWORK_CHECKS=$SKIP_NETWORK_CHECKS" \
