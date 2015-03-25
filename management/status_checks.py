@@ -11,7 +11,7 @@ import os, os.path, re, subprocess, datetime, multiprocessing.pool
 import dns.reversename, dns.resolver
 import dateutil.parser, dateutil.tz
 
-from dns_update import get_dns_zones, build_tlsa_record, get_custom_dns_config
+#from dns_update import get_dns_zones, build_tlsa_record, get_custom_dns_config
 from web_update import get_web_domains, get_domain_ssl_files
 from mailconfig import get_mail_domains, get_mail_aliases
 

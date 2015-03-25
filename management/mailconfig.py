@@ -549,8 +549,8 @@ def kick(env, mail_result=None):
 
 	# Update DNS and nginx in case any domains are added/removed.
 
-	from dns_update import do_dns_update
-	results.append( do_dns_update(env) )
+	#from dns_update import do_dns_update
+	#results.append( do_dns_update(env) )
 
 	from web_update import do_web_update
 	results.append( do_web_update(env) )
