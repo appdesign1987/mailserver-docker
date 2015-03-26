@@ -41,6 +41,10 @@ RUN apt-get clean
 
 # Create the user-data user, so the start script doesn't have to.
 RUN useradd -m user-data
+RUN useradd -M -m mailadmin 
+
+#adduser to sudoers
+RUN adduser mailadmin sudo
 
 # Now add Mail-in-a-Box to the system.
 ADD . /usr/local/mailinabox
