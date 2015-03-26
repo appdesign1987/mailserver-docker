@@ -31,7 +31,7 @@ docker build -q -t mailinabox .
 if ! docker ps -a | grep mailinabox-userdata > /dev/null; then
 	tput setaf 2
 	echo
-	echo "Creating a new container for your data (mailinabox-userdata)..."
+	echo "Creating a new container for your data and roundcubemail (mailinabox-userdata)..."
 	tput setaf 7
 
 	docker create -v /home/user-data \

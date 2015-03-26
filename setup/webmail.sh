@@ -30,7 +30,7 @@ apt_install \
 apt-get purge -qq -y roundcube* #NODOC
 
 # Install Roundcube from source if it is not already present or if it is out of date.
-VERSION=1.1.0
+VERSION=1.1.1
 needs_update=0 #NODOC
 if [ ! -f /usr/local/lib/roundcubemail/version ]; then
 	# not installed yet #NODOC
@@ -45,6 +45,7 @@ if [ $needs_update == 1 ]; then
 	wget -qO /tmp/roundcube.tgz http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/$VERSION/roundcubemail-$VERSION.tar.gz
 	tar -C /usr/local/lib -zxf /tmp/roundcube.tgz
 	rm -rf /usr/local/lib/roundcubemail
+	ln -s /usr/local/lib/roundcubemail /home/user-data/roundcubemail
 	mv /usr/local/lib/roundcubemail-$VERSION/ /usr/local/lib/roundcubemail
 	rm -f /tmp/roundcube.tgz
 	echo $VERSION > /usr/local/lib/roundcubemail/version
