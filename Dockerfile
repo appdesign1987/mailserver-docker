@@ -41,7 +41,7 @@ RUN apt-get clean
 
 # Create the user-data user, so the start script doesn't have to.
 RUN useradd -m user-data
-RUN useradd -M -m mailadmin 
+RUN useradd -M mailadmin 
 
 #adduser to sudoers
 RUN adduser mailadmin sudo
