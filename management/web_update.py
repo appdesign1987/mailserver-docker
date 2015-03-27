@@ -5,7 +5,7 @@
 import os, os.path, shutil, re, tempfile, rtyaml
 
 from mailconfig import get_mail_domains
-#from dns_update import get_custom_dns_config, do_dns_update
+from dns_update import get_custom_dns_config, do_dns_update
 from utils import shell, safe_domain_name, sort_domains
 
 def get_web_domains(env):
