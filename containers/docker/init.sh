@@ -70,6 +70,9 @@ done
 # Rsyslog isn't starting automatically but we need it during setup.
 service rsyslog start
 
+#make sure postgrey is started
+/etc/init.d/postgrey start
+
 # Start configuration. Using 'source' means an exit from inside
 # also exits this script and terminates the container.
 cd /usr/local/mailinabox
