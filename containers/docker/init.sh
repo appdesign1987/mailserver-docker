@@ -54,6 +54,11 @@ EOF
 #make_runit_service postgrey postgrey
 #make_runit_service spampd spampd
 
+#We do want a persistent roundcube installation. Therefore we remove the installed version and create a symlink from the user-data
+mv /usr/local/lib/roundcubemail /home/user-data/
+rm -R /usr/local/lib/roundcubemail
+ln -s /home/user-data/roundcubemail /usr/local/lib/roundcubemail
+
 # Dovecot doesn't provide an init.d script, but it does provide
 # a way to launch without daemonization. We wrote a script for
 # that specifically.
